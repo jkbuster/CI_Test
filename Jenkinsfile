@@ -4,10 +4,10 @@ podTemplate(label: 'docker-build', cloud: 'default',  containers: [
 volumes: [
   hostPathVolume(mountPath: "/var/run/docker.sock", hostPath: "/var/run/docker.sock")
 ]) {
+  stage('Build') {
     node('docker-build') {
       echo 'Building..'
       container('docker') {
-  stage('Build') {
         echo 'In container'
         checkout scm
         sh './test_script.sh'
