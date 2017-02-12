@@ -10,8 +10,8 @@ podTemplate(label: 'docker-build', containers: [
       stage('Build') {
         echo 'Building..'
         container('docker') {
-          sh "pwd"
           sh "ls"
+          sh "ls $HOME"
           sh "env"
           sh "docker build ."
         }
