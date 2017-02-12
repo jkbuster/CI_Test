@@ -10,7 +10,7 @@ podTemplate(label: 'docker-build', containers: [
       stage('Build') {
         echo 'Building..'
         container('docker') {
-          docker build .
+          sh "docker build ."
         }
       }
       stage('Test') {
