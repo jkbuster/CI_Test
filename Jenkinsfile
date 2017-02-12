@@ -5,7 +5,7 @@ volumes: [
   hostPathVolume(mountPath: "/var/run/docker.sock", hostPath: "/var/run/docker.sock")
 ]) {
   stage('Build') {
-    container('docker') {
+    node('docker-build') {
       echo 'Building..'
       checkout scm
       sh './test_script.sh'
