@@ -1,4 +1,4 @@
-podTemplate(label: 'docker-build', cloud: 'default',  containers: [
+podTemplate(label: 'docker-build', containers: [
   containerTemplate(name: 'docker', image: 'docker:dind')
 ],
 volumes: [
