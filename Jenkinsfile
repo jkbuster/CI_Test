@@ -4,7 +4,6 @@ podTemplate(label: 'docker-build', cloud: 'default',  containers: [
 volumes: [
   hostPathVolume(mountPath: "/var/run/docker.sock", hostPath: "/var/run/docker.sock")
 ]) {
-    stages {
         stage('Build') {
             steps {
                 echo 'Building..'
@@ -21,5 +20,4 @@ volumes: [
                 echo 'Deploying....'
             }
         }
-    }
 }
