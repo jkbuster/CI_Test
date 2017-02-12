@@ -11,9 +11,6 @@ volumes: [
     stage('Build') {
       echo 'Building..'
       container('docker') {
-        sh 'docker login -u jkbuster_jenkins quay.io/jkbuster'
-        sh 'ls -al'
-        sh 'pwd'
         sh "docker build -t quay.io/jkbuster/cidemo:${env.GIT_COMMIT} ."
         sh 'docker image'
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Quay.io',
