@@ -1,5 +1,5 @@
 podTemplate(label: 'docker-build',  containers: [
-  containerTemplate(name: 'docker', image: 'docker:1.11-dind', ttyEnabled: true, command: 'cat', envVars: [ tag: "GIT_COMMIT" ])
+  containerTemplate(name: 'docker', image: 'docker:1.11-dind', ttyEnabled: true, command: 'cat', envVars: [containerEnvVar(key: 'git_tag', value: "${env.GIT_COMMIT}")])
 ],
 volumes: [
   hostPathVolume(mountPath: "/var/run/docker.sock", hostPath: "/var/run/docker.sock")
