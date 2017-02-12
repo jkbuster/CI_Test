@@ -11,10 +11,10 @@ volumes: [
     stage('Build') {
       echo 'Building..'
       container('docker') {
-        echo 'In container'
+        sh 'docker login -u jkbuster_jenkins quay.io/jkbuster'
         sh 'ls -al'
         sh 'pwd'
-        sh "docker build -t quay.io/jkbuster/cidemo:${env.BUILD_TAG} ."
+        sh "docker build -t quay.io/jkbuster/cidemo:${env.GIT_COMMIT} ."
       }
     }
     stage('Test') {
