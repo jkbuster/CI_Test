@@ -5,9 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-            }
-            steps {
-              pwd
+                echo 'Building some more..'
             }
         }
         stage('Test') {
