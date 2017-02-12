@@ -7,9 +7,11 @@ volumes: [
   stage('Build') {
     node('docker-build') {
       echo 'Building..'
-      checkout scm
-      sh './test_script.sh'
-      sh 'docker build .'
+      container('docker') {
+        checkout scm
+        sh './test_script.sh'
+        sh 'docker build .'
+      }
     }
   }
   stage('Test') {
