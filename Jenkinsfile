@@ -12,7 +12,7 @@ volumes: [
       echo 'Building..'
       container('docker') {
         sh "docker build -t quay.io/jkbuster/cidemo:${env.GIT_COMMIT} ."
-        sh 'docker image'
+        sh 'docker images'
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Quay.io',
           usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
           sh "docker login -u $USERNAME -p $PASSWORD quay.io/jkbuster"
