@@ -7,6 +7,7 @@ volumes: [
   stage('Build') {
     node('docker-build') {
       echo 'Building..'
+      checkout
       sh './test_script.sh'
     }
   }
