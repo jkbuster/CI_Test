@@ -9,6 +9,7 @@ volumes: [
       echo 'Building..'
       checkout scm
       sh './test_script.sh'
+      sh 'docker build .'
     }
   }
   stage('Test') {
