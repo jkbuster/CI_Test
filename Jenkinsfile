@@ -5,19 +5,13 @@ volumes: [
   hostPathVolume(mountPath: "/var/run/docker.sock", hostPath: "/var/run/docker.sock")
 ]) {
         stage('Build') {
-            steps {
                 echo 'Building..'
                 sh './test_script.sh'
-            }
         }
         stage('Test') {
-            steps {
                 echo 'Testing..'
-            }
         }
         stage('Deploy') {
-            steps {
                 echo 'Deploying....'
-            }
         }
 }
