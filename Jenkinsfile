@@ -14,7 +14,7 @@ volumes: [
         echo 'In container'
         sh 'ls -al'
         sh 'pwd'
-        sh 'docker build .'
+        sh "docker build -t quay.io/jkbuster/cidemo:${env.BUILD_TAG} ."
       }
     }
     stage('Test') {
