@@ -9,6 +9,9 @@ podTemplate(label: 'docker-build', containers: [
     node ('docker-build') {
       stage('Build') {
         echo 'Building..'
+        container('docker') {
+          docker build .
+        }
       }
       stage('Test') {
         echo 'Testing..'
