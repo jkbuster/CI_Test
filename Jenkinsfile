@@ -8,6 +8,7 @@ volumes: [
     node('docker-build') {
       echo 'Building..'
       container('docker') {
+        stage 'blah blah'
         checkout scm
         echo 'In the container!'
         sh './test_script.sh'
