@@ -11,6 +11,7 @@ volumes: [
 
     // Variables
     sh 'git rev-parse --short HEAD > commit'
+    sh 'cat commit'
     def commit_id = readFile('commit').trim()
     def branch_id = build.environment.get("BRANCH_NAME")
     def build_id = build.environment.get("BUILD_NUMBER")
