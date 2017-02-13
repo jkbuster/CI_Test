@@ -1,7 +1,8 @@
 #!groovy
 
 podTemplate(label: 'docker-build',  containers: [
-  containerTemplate(name: 'docker', image: 'docker:1.11-dind', ttyEnabled: true, command: 'cat')
+  containerTemplate(name: 'docker', image: 'docker:1.11-dind', ttyEnabled: true, command: 'cat'),
+  containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:latest', ttyEnabled: true, command: 'cat')
 ],
 volumes: [
   hostPathVolume(mountPath: "/var/run/docker.sock", hostPath: "/var/run/docker.sock")
@@ -15,11 +16,6 @@ volumes: [
     def branch_id = env.BRANCH_NAME
     def build_id = env.BUILD_NUMBER
     def registry = 'quay.io/jkbuster/cidemo'
-
-    def hostIp(container) {
-      sh "docker inspect -f {{.Node.Ip}} ${container.id} > hostIp"
-      readFile('hostIp').trim()
-    }
 
     stage('Build') {
       echo 'Building..'
@@ -40,10 +36,8 @@ volumes: [
     stage('Test') {
       echo 'Testing..'
 
-      container('docker') {
-        docker.image("${registry}:${build_id}_${commit_id}").withRun('-p 5130:80') {c ->
-          sh "curl -i http://${hostIp(c)}:5130/"
-        }
+      container('kubectl') {
+        sh "kubectl run cidemo_${branch_id}_${build_id} --image=${registry}:${build_id}_${commit_id} --port=80 --expose"
       }
     }
     stage('Deploy') {
