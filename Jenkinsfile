@@ -9,11 +9,11 @@ volumes: [
       checkout scm
     }
 
+    sh 'env'
     // Variables
     def commit_id = 'git rev-parse --short HEAD'.execute()
     def registry = 'quay.io/jkbuster/cidemo'
 
-    sh 'env'
 
     stage('Build') {
       echo 'Building..'
