@@ -41,7 +41,6 @@ volumes: [
     }
     stage('Deploy') {
       echo 'Deploying....'
-      echo "Previous version: ${cur_version}"
       container('docker') {
         sh "docker tag ${registry}:${build_id}_${commit_id} ${registry}:${branch_id}"
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Quay.io',
