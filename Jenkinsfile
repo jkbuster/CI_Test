@@ -37,7 +37,7 @@ volumes: [
       echo 'Testing..'
 
       container('kubectl') {
-        sh "kubectl run cidemo_${branch_id}_${build_id} --image=${registry}:${build_id}_${commit_id} --port=80 --expose"
+        sh "kubectl run cidemo-${branch_id}-${build_id} --image=${registry}:${build_id}_${commit_id} --port=80 --expose"
       }
     }
     stage('Deploy') {
