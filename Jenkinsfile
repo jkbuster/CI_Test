@@ -7,18 +7,18 @@ volumes: [
   hostPathVolume(mountPath: "/var/run/docker.sock", hostPath: "/var/run/docker.sock")
 ]) {
   node('docker-build') {
+    checkout scm
 
     // Variables
     sh 'git rev-parse --short HEAD > commit'
     def commit_id = readFile('commit').trim()
     def branch_id = build.environment.get("BRANCH_NAME")
     def build_id = build.environment.get("BUILD_NUMBER")
-    // def registry = 'quay.io/jkbuster/cidemo'
+    def registry = 'quay.io/jkbuster/cidemo'
 
 
     stage('Build') {
       echo 'Building..'
-      checkout scm
 
       container('docker') {
         sh "docker build -t ${registry}:${commit_id} ."
