@@ -9,7 +9,6 @@ volumes: [
   node('docker-build') {
 
     // Variables
-    def env = System.getenv()
     sh 'git rev-parse --short HEAD > commit'
     def commit_id = readFile('commit').trim()
     def branch_id = build.environment.get("BRANCH_NAME")
