@@ -37,8 +37,8 @@ volumes: [
       echo 'Testing..'
 
       container('docker') {
-        docker.image('httpd').withRun('-p 8080:80') {c ->
-          sh "curl -i http://${hostIp(c)}:8080/"
+        docker.image('httpd').withRun('-p 5130:80') {c ->
+          sh "curl -i http://${hostIp(c)}:5130/"
         }
       }
     }
