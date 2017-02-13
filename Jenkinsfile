@@ -15,7 +15,6 @@ volumes: [
     def branch_id = env.BRANCH_NAME
     def build_id = env.BUILD_NUMBER
     def registry = 'quay.io/jkbuster/cidemo'
-    def cur_version = sh(git describe --abbrev=0 --tags).trim()
 
     stage('Build') {
       echo 'Building..'
