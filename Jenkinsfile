@@ -22,7 +22,7 @@ volumes: [
 
       container('docker') {
         sh "docker build -t ${registry}:${build_id}_${commit_id} ."
-        sh "docker tag ${registry}:${commit_id} ${registry}:${branch_id}"
+        sh "docker tag ${registry}:${build_id}_${commit_id} ${registry}:${branch_id}"
 
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Quay.io',
           usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
