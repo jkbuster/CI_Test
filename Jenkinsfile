@@ -38,6 +38,8 @@ volumes: [
 
       container('kubectl') {
         sh "kubectl run cidemo-${branch_id}-${build_id} --image=${registry}:${build_id}_${commit_id} --port=80 --expose"
+        sh "wget http://cidemo-${branch_id}-${build_id}"
+        sh "kubectl delete deploy/cidemo-${branch_id}-${build_id} svc/cidemo-${branch_id}-${build_id}"
       }
     }
     stage('Deploy') {
