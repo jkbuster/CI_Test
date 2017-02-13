@@ -40,7 +40,7 @@ volumes: [
       }
     }
     stage('Deploy') {
-      when { branch_id == 'master' }
+      when { branch '*/master' }
       echo 'Deploying....'
       container('docker') {
         sh "docker tag ${registry}:${build_id}_${commit_id} ${registry}:${branch_id}"
