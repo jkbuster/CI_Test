@@ -11,7 +11,6 @@ volumes: [
 
     // Variables
     sh 'git rev-parse --short HEAD > commit'
-    sh 'cat commit'
     def commit_id = readFile('commit').trim()
     def branch_id = env.BRANCH_NAME
     def build_id = env.BUILD_NUMBER
@@ -22,13 +21,14 @@ volumes: [
       echo 'Building..'
 
       container('docker') {
-        sh "docker build -t ${registry}:${commit_id} ."
+        sh "docker build -t ${registry}:${build_id}_${commit_id} ."
         sh "docker tag ${registry}:${commit_id} ${registry}:${branch_id}"
 
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Quay.io',
           usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
           sh "docker login -u $USERNAME -p $PASSWORD quay.io/jkbuster"
-          sh "docker push ${registry}"
+          sh "docker push ${registry}:${build_id}_${commit_id}"
+          sh "docker push ${registry}:${branch_id}"
         }
       }
     }
