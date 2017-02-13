@@ -37,7 +37,7 @@ volumes: [
       echo 'Testing..'
 
       container('docker') {
-        docker.image('${registry}:${build_id}_${commit_id}').withRun('-p 5130:80') {c ->
+        docker.image("${registry}:${build_id}_${commit_id}").withRun('-p 5130:80') {c ->
           sh "curl -i http://${hostIp(c)}:5130/"
         }
       }
