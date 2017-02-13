@@ -15,19 +15,18 @@ volumes: [
     def branch_id = env.BRANCH_NAME
     def build_id = env.BUILD_NUMBER
     def registry = 'quay.io/jkbuster/cidemo'
+    def cur_version = sh(git describe --abbrev=0 --tags).trim()
 
     stage('Build') {
       echo 'Building..'
 
       container('docker') {
         sh "docker build -t ${registry}:${build_id}_${commit_id} ."
-        sh "docker tag ${registry}:${build_id}_${commit_id} ${registry}:${branch_id}"
 
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Quay.io',
           usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
           sh "docker login -u $USERNAME -p $PASSWORD quay.io/jkbuster"
           sh "docker push ${registry}:${build_id}_${commit_id}"
-          sh "docker push ${registry}:${branch_id}"
         }
       }
     }
@@ -43,6 +42,18 @@ volumes: [
     }
     stage('Deploy') {
       echo 'Deploying....'
+      echo "Previous version: ${cur_version}"
+      container('docker') {
+        sh "docker tag ${registry}:${build_id}_${commit_id} ${registry}:${branch_id}"
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Quay.io',
+          usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+          sh "docker login -u $USERNAME -p $PASSWORD quay.io/jkbuster"
+          sh "docker push ${registry}:${branch_id}"
+        }
+      }
+      container('kubectl') {
+        sh "kubectl set image deploy/cidemo cidemo=${registry}:${build_id}_${commit_id}"
+      }
     }
   }
 }
