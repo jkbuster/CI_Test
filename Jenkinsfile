@@ -16,6 +16,10 @@ volumes: [
     def build_id = env.BUILD_NUMBER
     def registry = 'quay.io/jkbuster/cidemo'
 
+    def hostIp(container) {
+      sh "docker inspect -f {{.Node.Ip}} ${container.id} > hostIp"
+      readFile('hostIp').trim()
+    }
 
     stage('Build') {
       echo 'Building..'
