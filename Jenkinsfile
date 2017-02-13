@@ -12,8 +12,8 @@ volumes: [
     def env = System.getenv()
     sh 'git rev-parse --short HEAD > commit'
     def commit_id = readFile('commit').trim()
-    def branch_id = ${env.BRANCH_NAME}
-    def build_id = ${env.BUILD_NUMBER}
+    def branch_id = build.environment.get("BRANCH_NAME")
+    def build_id = build.environment.get("BUILD_NUMBER")
     // def registry = 'quay.io/jkbuster/cidemo'
 
 
