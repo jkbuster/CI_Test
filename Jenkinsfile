@@ -11,8 +11,7 @@ volumes: [
     checkout scm
 
     // Variables
-    sh 'git rev-parse --short HEAD > commit'
-    def commit_id = readFile('commit').trim()
+    def commit_id = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
     def branch_id = env.BRANCH_NAME
     def build_id = env.BUILD_NUMBER
     def registry = 'quay.io/jkbuster/cidemo'
